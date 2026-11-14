@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كشفي – تسيير مالي للمؤسسات الصغيرة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2f0;--card:#fff;--ink:#14302b;--mut:#5d716d;--bd:#d3ddd9;--in:#0f6b5c;--out:#b3261e;--pri:#14302b;--onpri:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b19;--card:#172724;--ink:#e6f0ed;--mut:#9bb0ab;--bd:#2a3e3a;--in:#4fd1b5;--out:#ff8a80;--pri:#4fd1b5;--onpri:#0f1b19;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1b19;--card:#172724;--ink:#e6f0ed;--mut:#9bb0ab;--bd:#2a3e3a;--in:#4fd1b5;--out:#ff8a80;--pri:#4fd1b5;--onpri:#0f1b19;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,Arial,sans-serif;line-height:1.6;padding-bottom:76px}
+main{max-width:720px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:6px 0 2px}h2{font-size:16px;margin:18px 0 8px}
+.sub{color:var(--mut);font-size:13px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.k{font-size:12px;color:var(--mut)}.v{font-size:20px;font-weight:700}
+.in{color:var(--in)}.out{color:var(--out)}
+.ledger{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--bd);border-radius:10px;background:var(--card);margin-bottom:12px;overflow:hidden}
+.ledger>div{padding:10px 12px}.ledger>div+div{border-inline-start:2px solid var(--ink)}
+.ledger .row{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--bd);padding:4px 0;font-size:14px}
+.ledger b{display:block;border-bottom:2px solid var(--ink);margin-bottom:4px;padding-bottom:2px}
+.bars{display:flex;align-items:flex-end;gap:8px;height:110px}
+.bars div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px;color:var(--mut)}
+.bars i{display:block;width:100%;min-height:2px;border-radius:3px 3px 0 0}
+.pair{display:flex;gap:3px;align-items:flex-end;width:100%;flex:1}.pair i{flex:1}
+label{display:block;font-size:13px;color:var(--mut);margin:8px 0 2px}
+input,select,button{font:inherit;color:var(--ink)}
+input,select{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg)}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+.btn{background:var(--pri);color:var(--onpri);border:0;border-radius:8px;padding:10px 16px;font-weight:600;cursor:pointer}
+.btn.s{background:transparent;color:var(--ink);border:1px solid var(--bd);padding:4px 10px;font-size:13px;font-weight:400}
+.f{display:flex;gap:8px}.f>*{flex:1}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.item:last-child{border:0}.item small{color:var(--mut);display:block}
+.tag{font-size:12px;border-radius:99px;padding:1px 8px;border:1px solid var(--bd)}
+.tag.late{color:var(--out);border-color:var(--out)}.tag.ok{color:var(--in);border-color:var(--in)}
+nav{position:fixed;inset:auto 0 0 0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:0;padding:8px;font-weight:600;color:var(--mut);cursor:pointer;border-radius:8px}
+nav button[aria-current="true"]{color:var(--onpri);background:var(--pri)}
+.empty{color:var(--mut);text-align:center;padding:14px;font-size:14px}
+.tw{overflow-x:auto}
+.brand{display:flex;align-items:center;gap:10px;margin:4px 0 8px}.brand svg{width:46px;height:46px;flex:none}.brand b{display:block;font-size:24px;line-height:1.1}.brand span{display:block;font-size:12px;color:var(--mut);letter-spacing:2px}
+#pv{display:none}
+@media print{body>*:not(#pv){display:none!important}#pv{display:block;color:#000;background:#fff;padding:20px}#pv table{width:100%;border-collapse:collapse}#pv td,#pv th{border:1px solid #888;padding:6px;text-align:right}}
+</style></head><body>
+<main>
+<div class="brand"><svg viewBox="0 0 64 64" role="img" aria-label="شعار كشفي"><rect width="64" height="64" rx="14" fill="#14302b"/><path d="M18 11h20l11 11v30a2 2 0 0 1-2 2H18a2 2 0 0 1-2-2V13a2 2 0 0 1 2-2z" fill="#eef2f0"/><path d="M38 11v9a2 2 0 0 0 2 2h9z" fill="#9bb0ab"/><path d="M22 28h13M22 34h9" stroke="#14302b" stroke-width="3" stroke-linecap="round"/><path d="M22 48l7-7 5 4 9-10" stroke="#0f6b5c" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="43" cy="35" r="2.6" fill="#0f6b5c"/></svg><div><b>كشفي</b><span>KACHFY</span></div></div>
+<section id="v-dash"></section><section id="v-tx" hidden></section><section id="v-inv" hidden></section>
+<p class="sub">تُحفظ بياناتك داخل متصفح هذا الجهاز فقط، فلا تفتح الصفحة من جهاز آخر وتنتظر أن تجدها.</p>
+</main>
+<nav><button data-t="dash" aria-current="true">الملخص</button><button data-t="tx">المعاملات</button><button data-t="inv">الفواتير</button></nav>
+<div id="pv"></div>
+<script>
+const CATS_IN=['مبيعات','خدمات','أخرى'],CATS_OUT=['مواد أولية','إيجار','كهرباء وماء','أجور','نقل','ضرائب ورسوم','أخرى'];
+let S={tx:[],inv:[]};
+try{const r=localStorage.getItem('hisabati');if(r)S=JSON.parse(r)}catch(e){}
+const save=()=>{try{localStorage.setItem('hisabati',JSON.stringify(S))}catch(e){}};
+const $=id=>document.getElementById(id);
+const fmt=n=>new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(Math.round(n||0))+' دج';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const today=()=>new Date().toISOString().slice(0,10);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const tot=i=>i.items.reduce((s,x)=>s+x.q*x.p,0)*(1+i.tva/100);
+let month=today().slice(0,7),tab='dash',rows=1;
 
+function show(t){tab=t;['dash','tx','inv'].forEach(k=>{$('v-'+k).hidden=k!==t});
+document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.t===t));render()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>show(b.dataset.t));
+
+function sums(m){let i=0,o=0;const by={};S.tx.filter(t=>t.date.startsWith(m)).forEach(t=>{if(t.type==='in')i+=t.amount;else{o+=t.amount;by[t.cat]=(by[t.cat]||0)+t.amount}});return{i,o,by}}
+function dash(){
+const s=sums(month),p=s.i-s.o,open=S.inv.filter(x=>!x.paid),late=open.filter(x=>x.due&&x.due<today());
+const ms=[];let d=new Date(month+'-01');for(let k=5;k>=0;k--){const x=new Date(d.getFullYear(),d.getMonth()-k,1);ms.push(x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0'))}
+const data=ms.map(m=>({m,...sums(m)})),mx=Math.max(1,...data.flatMap(x=>[x.i,x.o]));
+const cats=Object.entries(s.by).sort((a,b)=>b[1]-a[1]);
+$('v-dash').innerHTML=`<h1>ملخص الشهر</h1><input type="month" id="mo" value="${month}" aria-label="الشهر">
+<div class="grid" style="margin-top:10px"><div class="card"><div class="k">المداخيل</div><div class="v in">${fmt(s.i)}</div></div>
+<div class="card"><div class="k">المصاريف</div><div class="v out">${fmt(s.o)}</div></div>
+<div class="card"><div class="k">الربح</div><div class="v ${p<0?'out':'in'}">${fmt(p)}</div></div>
+<div class="card"><div class="k">هامش الربح</div><div class="v">${s.i?Math.round(p/s.i*100)+'%':'—'}</div></div></div>
+<div class="card"><div class="k">ديون عند الزبائن</div><div class="v">${fmt(open.reduce((a,x)=>a+tot(x),0))}</div>
+<div class="k">${late.length?`<span class="out">${late.length} فاتورة متأخرة عن موعدها</span>`:'لا توجد فواتير متأخرة'}</div></div>
+<h2>كشف الشهر</h2><div class="ledger"><div><b>مداخيل</b>${S.tx.filter(t=>t.type==='in'&&t.date.startsWith(month)).map(t=>`<div class="row"><span>${esc(t.cat)}</span><span>${fmt(t.amount)}</span></div>`).join('')||'<div class="k">لا شيء بعد</div>'}</div>
+<div><b>مصاريف</b>${cats.map(([c,v])=>`<div class="row"><span>${esc(c)}</span><span>${fmt(v)}</span></div>`).join('')||'<div class="k">لا شيء بعد</div>'}</div></div>
+<h2>آخر 6 أشهر</h2><div class="card"><div class="bars">${data.map(x=>`<div><div class="pair"><i style="height:${x.i/mx*100}%;background:var(--in)"></i><i style="height:${x.o/mx*100}%;background:var(--out)"></i></div>${x.m.slice(5)}</div>`).join('')}</div>
+<div class="k" style="margin-top:6px"><span class="in">■</span> مداخيل &nbsp; <span class="out">■</span> مصاريف</div></div>`;
+$('mo').onchange=e=>{month=e.target.value||month;dash()}}
+
+function opts(a){return a.map(c=>`<option>${c}</option>`).join('')}
+function txv(){
+$('v-tx').innerHTML=`<h1>المعاملات</h1><div class="card"><div class="f"><div><label for="ty">النوع</label><select id="ty"><option value="in">مدخول</option><option value="out">مصروف</option></select></div>
+<div><label for="am">المبلغ (دج)</label><input id="am" type="number" min="0" inputmode="decimal"></div></div>
+<div class="f"><div><label for="ct">الفئة</label><select id="ct">${opts(CATS_IN)}</select></div><div><label for="dt">التاريخ</label><input id="dt" type="date" value="${today()}"></div></div>
+<label for="nt">ملاحظة</label><input id="nt"><p id="er" class="out sub"></p><button class="btn" id="add">حفظ المعاملة</button></div>
+<div class="card">${S.tx.length?[...S.tx].sort((a,b)=>b.date.localeCompare(a.date)).map(t=>`<div class="item"><div>${esc(t.cat)}<small>${t.date} ${esc(t.note)}</small></div><div><b class="${t.type}">${t.type==='in'?'+':'−'}${fmt(t.amount)}</b> <button class="btn s" data-d="${t.id}" aria-label="حذف">حذف</button></div></div>`).join(''):'<div class="empty">لا توجد معاملات. سجّل أول مدخول أو مصروف من الأعلى.</div>'}</div>`;
+$('ty').onchange=e=>$('ct').innerHTML=opts(e.target.value==='in'?CATS_IN:CATS_OUT);
+$('add').onclick=()=>{const a=parseFloat($('am').value);if(!(a>0)){$('er').textContent='أدخل مبلغاً أكبر من صفر.';return}
+S.tx.push({id:uid(),type:$('ty').value,amount:a,cat:$('ct').value,date:$('dt').value||today(),note:$('nt').value});save();txv()};
+document.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{S.tx=S.tx.filter(t=>t.id!==b.dataset.d);save();txv()})}
+
+function rowH(){return `<div class="f it" style="align-items:end"><div style="flex:2"><label>الوصف</label><input class="d"></div><div><label>الكمية</label><input class="q" type="number" value="1" min="0"></div><div><label>السعر</label><input class="p" type="number" min="0"></div></div>`}
+function invv(){
+const st=i=>i.paid?'<span class="tag ok">مدفوعة</span>':(i.due&&i.due<today()?'<span class="tag late">متأخرة</span>':'<span class="tag">معلّقة</span>');
+$('v-inv').innerHTML=`<h1>الفواتير</h1><div class="card"><label for="cl">اسم الزبون</label><input id="cl">
+<div class="f"><div><label for="du">موعد الدفع</label><input id="du" type="date"></div><div><label for="tv">TVA</label><select id="tv"><option value="0">بدون</option><option value="9">9%</option><option value="19">19%</option></select></div></div>
+<div id="rows">${rowH()}</div><p id="er2" class="out sub"></p><div class="f"><button class="btn s" id="ar">+ سطر</button><button class="btn" id="sv">حفظ الفاتورة</button></div></div>
+<div class="card">${S.inv.length?[...S.inv].reverse().map(i=>`<div class="item"><div>${esc(i.client)} ${st(i)}<small>رقم ${i.no} — ${i.date}${i.due?' — الدفع قبل '+i.due:''}</small></div><div style="text-align:end"><b>${fmt(tot(i))}</b><br>${i.paid?'':`<button class="btn s" data-p="${i.id}">تم الدفع</button> `}<button class="btn s" data-pr="${i.id}">طباعة</button> <button class="btn s" data-x="${i.id}">حذف</button></div></div>`).join(''):'<div class="empty">لا توجد فواتير. أنشئ أول فاتورة من الأعلى.</div>'}</div>`;
+$('ar').onclick=()=>$('rows').insertAdjacentHTML('beforeend',rowH());
+$('sv').onclick=()=>{const items=[...document.querySelectorAll('#rows .it')].map(r=>({d:r.querySelector('.d').value,q:+r.querySelector('.q').value,p:+r.querySelector('.p').value})).filter(x=>x.d&&x.q>0&&x.p>0);
+if(!$('cl').value.trim()||!items.length){$('er2').textContent='أدخل اسم الزبون وسطراً واحداً على الأقل بوصف وكمية وسعر.';return}
+S.inv.push({id:uid(),no:S.inv.length+1,client:$('cl').value.trim(),date:today(),due:$('du').value,tva:+$('tv').value,items,paid:false});save();invv()};
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{const i=S.inv.find(x=>x.id===b.dataset.p);i.paid=true;S.tx.push({id:uid(),type:'in',amount:tot(i),cat:'مبيعات',date:today(),note:'فاتورة '+i.no+' — '+i.client});save();invv()});
+document.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{S.inv=S.inv.filter(x=>x.id!==b.dataset.x);save();invv()});
+document.querySelectorAll('[data-pr]').forEach(b=>b.onclick=()=>{const i=S.inv.find(x=>x.id===b.dataset.pr),h=i.items.reduce((s,x)=>s+x.q*x.p,0);
+$('pv').innerHTML=`<h1>فاتورة رقم ${i.no}</h1><p>الزبون: ${esc(i.client)}<br>التاريخ: ${i.date}</p><table><tr><th>الوصف</th><th>الكمية</th><th>السعر</th><th>المجموع</th></tr>${i.items.map(x=>`<tr><td>${esc(x.d)}</td><td>${x.q}</td><td>${fmt(x.p)}</td><td>${fmt(x.q*x.p)}</td></tr>`).join('')}</table><p>المجموع خارج الرسم: ${fmt(h)}<br>TVA ${i.tva}%: ${fmt(h*i.tva/100)}<br><b>المبلغ الإجمالي: ${fmt(tot(i))}</b></p>`;window.print()})}
+
+function render(){if(tab==='dash')dash();else if(tab==='tx')txv();else invv()}
+render();
+</script></body></html>
